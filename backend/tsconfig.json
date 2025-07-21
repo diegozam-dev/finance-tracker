@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    /* --- Core Settings: Modern, Strict, and Safe --- */
+    "target": "ES2022", // Compila a una versión moderna de JavaScript. ES2022 es compatible con las versiones actuales de Node.js y navegadores.
+    "module": "NodeNext", // El estándar moderno para módulos en Node.js, permite usar 'import' y 'export'.
+    "moduleResolution": "NodeNext", // Cómo TypeScript encuentra los módulos. Es el compañero de "module": "NodeNext".
+    "strict": true, // ¡La opción más importante! Activa todas las reglas de chequeo estricto de tipos.
+    "esModuleInterop": true, // Permite que los módulos CommonJS (antiguos) funcionen bien con los módulos ES (modernos).
+    "lib": ["ES2022", "DOM"], // Incluye las definiciones de tipo para JavaScript moderno y para el entorno del navegador (DOM).
+
+    /* --- Project Structure: Keep things organized --- */
+    "rootDir": "src", // Le dice a TypeScript que todos tus archivos fuente están en la carpeta 'src'.
+    "outDir": "dist", // Donde se guardarán los archivos JavaScript compilados.
+    "baseUrl": ".", // Necesario para que funcionen los alias de ruta (paths).
+    "paths": {
+      "@/*": ["src/*"] // (Opcional pero recomendado) Crea un alias para importar archivos de forma más limpia. Ej: import User from '@/models/User'.
+    },
+
+    /* --- Code Quality: Catch errors before they happen --- */
+    "forceConsistentCasingInFileNames": true, // Evita problemas cuando trabajas en diferentes sistemas operativos (Windows no distingue mayúsculas, Linux sí).
+    "noUnusedLocals": true, // Te avisa si declaras una variable y no la usas.
+    "noUnusedParameters": true, // Te avisa si declaras un parámetro en una función y no lo usas.
+    "noImplicitReturns": true, // Se asegura de que todas las rutas de una función devuelvan un valor si se espera que lo hagan.
+
+    /* --- Supabase Integration & Build Process --- */
+    "skipLibCheck": true, // Acelera la compilación al no verificar los tipos de las bibliotecas de terceros (como las de node_modules).
+    "sourceMap": true // Genera archivos .map, que son esenciales para poder depurar tu código TypeScript directamente en el navegador o en Node.js.
+  },
+  "include": ["src/**/*", "src/types/database.types.ts"], // Le dice a TypeScript qué archivos debe compilar. Es VITAL incluir los tipos de Supabase aquí.
+  "exclude": ["node_modules", "dist"] // Carpetas que TypeScript debe ignorar.
+}
