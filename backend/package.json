@@ -1,7 +1,7 @@
 {
   "name": "finance-tracker-backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.ts",
   "type": "module",
   "exports": "./dist/index.mjs",
   "scripts": {
@@ -14,6 +14,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@supabase/supabase-js": "^2.53.0",
+    "@types/cors": "^2.8.19",
     "axios": "^1.10.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.0",
