@@ -2,8 +2,8 @@
   "compilerOptions": {
     /* --- Core Settings: Modern, Strict, and Safe --- */
     "target": "ES2022", // Compila a una versión moderna de JavaScript. ES2022 es compatible con las versiones actuales de Node.js y navegadores.
-    "module": "NodeNext", // El estándar moderno para módulos en Node.js, permite usar 'import' y 'export'.
-    "moduleResolution": "NodeNext", // Cómo TypeScript encuentra los módulos. Es el compañero de "module": "NodeNext".
+    "module": "es2022", // El estándar moderno para módulos en Node.js, permite usar 'import' y 'export'.
+    "moduleResolution": "node", // Cómo TypeScript encuentra los módulos. Es el compañero de "module": "NodeNext".
     "strict": true, // ¡La opción más importante! Activa todas las reglas de chequeo estricto de tipos.
     "esModuleInterop": true, // Permite que los módulos CommonJS (antiguos) funcionen bien con los módulos ES (modernos).
     "lib": ["ES2022", "DOM"], // Incluye las definiciones de tipo para JavaScript moderno y para el entorno del navegador (DOM).
