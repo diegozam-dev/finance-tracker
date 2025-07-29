@@ -25,4 +25,19 @@ export class AuthService {
 
     return data;
   };
+
+  static verifyTokenForSignUp = async ({
+    email,
+    token
+  }: {
+    email: string;
+    token: string;
+  }) => {
+    const data = await authRepository.verifyTokenForSignUp({
+      email,
+      token
+    });
+
+    return data;
+  };
 }

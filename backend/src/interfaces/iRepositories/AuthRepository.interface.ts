@@ -1,4 +1,4 @@
-// import { Database } from '../../types/database.types';
+import { AuthResponse } from '@supabase/supabase-js';
 
 export interface IAuthRepository {
   signUpWithEmail({
@@ -11,5 +11,5 @@ export interface IAuthRepository {
     lastname: string;
     email: string;
     password: string;
-  }): Promise<any>;
+  }): Promise<AuthResponse>;
 }

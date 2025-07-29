@@ -11,9 +11,7 @@ app.use(json());
 app.use(cors());
 app.disable('x-powered-by');
 
-// app.get('/', (req, res) => {
-//   res.send('Hola mundo');
-// });
+// Routes
 app.use('/', router);
 
 app.listen(PORT, () => {
