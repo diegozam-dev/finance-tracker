@@ -1,6 +1,4 @@
-// import { IAuthRepository } from '@/interfaces/iRepositories/AuthRepository.interface';
 import supabase from '@/db/connection';
-import { AuthResponse } from '@supabase/supabase-js';
 
 export class AuthRepository {
   signUpWithEmail = async ({
@@ -13,7 +11,7 @@ export class AuthRepository {
     lastname: string;
     email: string;
     password: string;
-  }): Promise<any> => {
+  }) => {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -25,11 +23,7 @@ export class AuthRepository {
       }
     });
 
-    console.log(data);
-
-    if (error) {
-      throw new Error(error.message);
-    }
+    if (error) throw error;
 
     return data;
   };
@@ -47,9 +41,7 @@ export class AuthRepository {
       type: 'email'
     });
 
-    if (error) {
-      throw new Error(error.message);
-    }
+    if (error) throw error;
 
     return data;
   };

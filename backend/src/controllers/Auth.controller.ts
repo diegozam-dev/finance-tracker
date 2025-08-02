@@ -1,11 +1,13 @@
-import { Request, Response } from 'express';
-import { AuthService } from '@/services/Auth.service';
+import { NextFunction, Request, Response } from 'express';
+import { AuthService } from '@/services/index';
 
 export class AuthController {
-  static signUpWithEmail = async (req: Request, res: Response) => {
+  static signUpWithEmail = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
     const { firstname, lastname, email, password } = req.body;
-
-    // console.log(email, password);
 
     try {
       const result = await AuthService.signUpWithEmail({
@@ -16,12 +18,16 @@ export class AuthController {
       });
 
       res.status(200).json(result);
-    } catch (e: any) {
-      console.log(e.message);
+    } catch (err) {
+      next(err);
     }
   };
 
-  static verifyTokenForSignUp = async (req: Request, res: Response) => {
+  static verifyTokenForSignUp = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
     const { email, token } = req.body;
 
     try {
@@ -31,8 +37,8 @@ export class AuthController {
       });
 
       res.status(200).json(result);
-    } catch (e: any) {
-      console.log(e.message);
+    } catch (err) {
+      next(err);
     }
   };
 }

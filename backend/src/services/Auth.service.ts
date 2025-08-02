@@ -1,6 +1,14 @@
-import { AuthRepository } from '@/repositories/Auth.repository';
+import { AuthRepository } from '@/repositories/index';
+import * as z from 'zod';
 
 const authRepository = new AuthRepository();
+
+const UserSignUpData = z.object({
+  firstname: z.string(),
+  lastname: z.string(),
+  email: z.email(),
+  password: z.string()
+});
 
 export class AuthService {
   static signUpWithEmail = async ({
@@ -14,16 +22,23 @@ export class AuthService {
     email: string;
     password: string;
   }) => {
-    // console.log(email, password);
+    try {
+      const validInput = UserSignUpData.parse({
+        firstname,
+        lastname,
+        email,
+        password
+      });
 
-    const data = await authRepository.signUpWithEmail({
-      firstname,
-      lastname,
-      email,
-      password
-    });
+      console.log(validInput);
 
-    return data;
+      const data = await authRepository.signUpWithEmail(validInput);
+
+      return data;
+    } catch (e: any) {
+      console.log(e.message);
+      throw e;
+    }
   };
 
   static verifyTokenForSignUp = async ({
