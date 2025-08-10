@@ -1,12 +1,11 @@
 import './App.css';
 
-import { Button } from '@material-tailwind/react';
+import { Login } from './modules/auth/index';
 
 function App() {
   return (
     <>
-      <p className="text-amber-700">Hola mundo</p>
-      <Button color="success">Success</Button>
+      <Login />
     </>
   );
 }
