@@ -1,0 +1,14 @@
+import 'dotenv/config';
+
+export const {
+  PORT = 3000,
+  BETTER_AUTH_SECRET,
+  BETTER_AUTH_URL,
+  PG_USER,
+  PG_PASSWORD,
+  PG_HOST,
+  PG_PORT = 5432,
+  PG_DATABASE,
+  GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET
+} = process.env;
