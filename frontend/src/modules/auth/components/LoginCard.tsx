@@ -9,6 +9,7 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { authClient } from '../../../utils/auth-client';
+import { Link } from 'react-router';
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'Invalid email.' }),
@@ -129,15 +130,7 @@ const LoginCard = () => {
           className="my-1 flex items-center justify-center gap-1 text-foreground"
         >
           Don't have an account?
-          <Typography
-            type="small"
-            as="a"
-            href="#"
-            color="primary"
-            className="font-bold"
-          >
-            Sign up
-          </Typography>
+          <Link to="/auth/register">Sign Up</Link>
         </Typography>
       </Card.Footer>
     </Card>
