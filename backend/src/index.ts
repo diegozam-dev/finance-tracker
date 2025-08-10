@@ -1,9 +1,7 @@
-import express from 'express';
+import express, { json } from 'express';
 import cors from 'cors';
 
 import { PORT } from './config.js';
-// import { toNodeHandler } from 'better-auth/node';
-// import { auth } from './utils/auth.js';
 import { authRouter, apiRouter } from './routes/index.js';
 
 const app = express();
@@ -15,13 +13,12 @@ app.use(
     credentials: true
   })
 );
-
 app.disable('x-powered-by');
 
 app.use(authRouter);
-app.use(apiRouter);
 
-// app.all('/api/auth/{*any}', toNodeHandler(auth));
+app.use(json());
+app.use(apiRouter);
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
