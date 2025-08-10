@@ -22,7 +22,9 @@ function App() {
       <div className="card">
         <button
           onClick={async () => {
-            const data = await authClient.signOut();
+            const data = await authClient.signIn.social({
+              provider: 'google'
+            });
             console.log(data);
           }}
         >

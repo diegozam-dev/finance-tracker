@@ -5,6 +5,6 @@ import { auth } from '@/utils/auth.js';
 
 const authRouter = Router();
 
-authRouter.all('/{*any}', toNodeHandler(auth));
+authRouter.all('/v1/api/auth/{*any}', toNodeHandler(auth));
 
 export default authRouter;
