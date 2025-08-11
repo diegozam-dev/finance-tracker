@@ -10,7 +10,7 @@ import {
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET
 } from '@/config.js';
-import { createAuthMiddleware } from 'better-auth/api';
+import handleAfterAuth from '@/middlewares/handleAfterAuth.js';
 
 export const auth = betterAuth({
   database: new Pool({
@@ -32,11 +32,6 @@ export const auth = betterAuth({
   },
   trustedOrigins: ['http://localhost:5173'],
   hooks: {
-    after: createAuthMiddleware(async ctx => {
-      if (ctx.path.endsWith('/sign-up/email')) {
-        const newSession = ctx.context.newSession;
-        console.log('new session: ' + newSession, 'Estoy en middleware auth');
-      }
-    })
+    after: handleAfterAuth
   }
 });
