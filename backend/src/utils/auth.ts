@@ -20,7 +20,8 @@ export const auth = betterAuth({
     database: PG_DATABASE
   }),
   emailAndPassword: {
-    enabled: true
+    enabled: true,
+    autoSignIn: false
   },
   socialProviders: {
     google: {
