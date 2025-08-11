@@ -8,8 +8,9 @@ import {
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { authClient } from '../../../utils/auth-client';
 import { Link } from 'react-router';
+import { authClient } from '../../../utils/auth-client';
+import { type LoginFormData } from '../types/authTypes';
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'Invalid email.' }),
@@ -18,12 +19,6 @@ const loginSchema = z.object({
     .min(6, { message: 'Password must be at least 6 characters.' }),
   remember: z.boolean().optional()
 });
-
-type LoginFormData = {
-  email: string;
-  password: string;
-  remember?: boolean;
-};
 
 const LoginCard = () => {
   const {
@@ -70,7 +65,7 @@ const LoginCard = () => {
   };
 
   return (
-    <Card className="max-w-xs">
+    <Card className="max-w-sm">
       <Card.Header
         as={Card}
         color="primary"
