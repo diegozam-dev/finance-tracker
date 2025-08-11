@@ -30,6 +30,7 @@ const LoginCard = () => {
   });
 
   const handleSignInWithEmail = async (formData: LoginFormData) => {
+    console.log(authClient.getSession());
     const { email, password, remember } = formData;
 
     const { data, error } = await authClient.signIn.email({
@@ -40,10 +41,12 @@ const LoginCard = () => {
     });
 
     if (error) {
+      console.log(error);
       alert(error.message);
       return;
     }
 
+    alert(data);
     console.log(data);
   };
 
@@ -57,10 +60,12 @@ const LoginCard = () => {
     });
 
     if (error) {
+      console.log(error);
       alert(error.message);
       return;
     }
 
+    alert(data);
     console.log(data);
   };
 
