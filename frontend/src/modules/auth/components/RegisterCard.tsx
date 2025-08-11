@@ -43,7 +43,7 @@ const RegisterCard = () => {
     resolver: zodResolver(loginSchema)
   });
 
-  const handleSignIn = async (formData: RegisterFormData) => {
+  const handleRegisterWithEmail = async (formData: RegisterFormData) => {
     const { firstname, lastname, email, password } = formData;
 
     const { data, error } = await authClient.signUp.email({
@@ -54,6 +54,7 @@ const RegisterCard = () => {
     });
 
     if (error) {
+      console.log(error);
       alert(error.message);
       return;
     }
@@ -193,7 +194,11 @@ const RegisterCard = () => {
             </Typography>
           )}
         </div>
-        <Button type="submit" isFullWidth onClick={handleSubmit(handleSignIn)}>
+        <Button
+          type="submit"
+          isFullWidth
+          onClick={handleSubmit(handleRegisterWithEmail)}
+        >
           Sign Up
         </Button>
       </Card.Body>
