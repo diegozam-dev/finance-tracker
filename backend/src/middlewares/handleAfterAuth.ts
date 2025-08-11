@@ -1,6 +1,7 @@
 import dbPool from '@/db/connection.js';
 import { AuthContext, MiddlewareContext, MiddlewareOptions } from 'better-auth';
 import { createAuthMiddleware } from 'better-auth/api';
+import { AuthResponseSchema } from '@/types/auth/auth.types.js';
 
 const handleAfterAuth = createAuthMiddleware(async ctx => {
   try {
@@ -23,7 +24,7 @@ const handleSignUp = async (
 ) => {
   const client = await dbPool.connect();
 
-  const response = ctx.context.returned;
+  const response = ctx.context.returned as AuthResponseSchema;
   const user = response.user;
 
   if (!user || !user.id) {
