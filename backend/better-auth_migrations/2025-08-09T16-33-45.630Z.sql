@@ -22,9 +22,10 @@ CREATE TYPE public.goal_states AS ENUM ('active', 'completed', 'archived');
 -- app schemes
 CREATE TABLE "profiles" (
   id TEXT NOT NULL PRIMARY KEY REFERENCES "user"(id) ON DELETE CASCADE,
-  avatar_path TEXT,
+  avatar_path TEXT DEFAULT 'avatar-1.jpg',
+  username TEXT NOT NULL,
   wallet NUMERIC(12, 2) NOT NULL DEFAULT 0,
-  app_preferences JSON,
+  app_preferences JSON DEFAULT '{"language": "english", "theme": "system", "current": "dollar"}'::json,
   failed_login_attempts INTEGER NOT NULL DEFAULT 0,
   lockout_expires_at TIMESTAMPTZ,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
@@ -610,6 +611,42 @@ BEGIN
   END IF;
 
   IF (TG_OP = 'DELETE') THEN RETURN OLD; ELSE RETURN NEW; END IF;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION public.create_profile_with_username(
+  p_user_id TEXT,
+  p_firstname TEXT,
+  p_lastname TEXT
+)
+RETURNS public.profiles
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  v_base_username TEXT;
+  v_final_username TEXT;
+  v_random_suffix INT;
+  new_profile public.profiles;
+BEGIN
+  -- 1. Construir la base del nombre de usuario a partir del nombre y apellido.
+  v_base_username := LEFT(LOWER(REPLACE(p_firstname || COALESCE(p_lastname, ''), ' ', '')), 6);
+
+  -- 2. Bucle para garantizar que el nombre de usuario final sea ÚNICO.
+  LOOP
+    -- Genera un número aleatorio de 4 dígitos (entre 1000 y 9999).
+    v_random_suffix := FLOOR(RANDOM() * 9000 + 1000);
+    v_final_username := v_base_username || v_random_suffix::TEXT;
+
+    -- Comprueba si este username ya existe. Si no, salimos del bucle.
+    EXIT WHEN NOT EXISTS (SELECT 1 FROM public.profiles WHERE username = v_final_username);
+  END LOOP;
+
+  -- 3. Inserta la nueva fila en 'profiles'.
+  INSERT INTO public.profiles (id, firstname, lastname, username)
+  VALUES (p_user_id, p_firstname, p_lastname, v_final_username)
+  RETURNING * INTO new_profile;
+
+  RETURN new_profile;
 END;
 $$;
 

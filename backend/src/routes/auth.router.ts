@@ -8,3 +8,5 @@ const authRouter = Router();
 authRouter.all('/v1/api/auth/{*any}', toNodeHandler(auth));
 
 export default authRouter;
+
+// crud para profile y tablas de better-auth
