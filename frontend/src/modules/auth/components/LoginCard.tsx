@@ -34,7 +34,7 @@ const LoginCard = () => {
     resolver: zodResolver(loginSchema)
   });
 
-  const handleSignIn = async (formData: LoginFormData) => {
+  const handleSignInWithEmail = async (formData: LoginFormData) => {
     const { email, password, remember } = formData;
 
     const { data, error } = await authClient.signIn.email({
@@ -42,6 +42,23 @@ const LoginCard = () => {
       password,
       // callbackURL: '/dashboard',
       rememberMe: remember
+    });
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    console.log(data);
+  };
+
+  const handleSignInWithGoogle = async (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    e.preventDefault();
+
+    const { data, error } = await authClient.signIn.social({
+      provider: 'google'
     });
 
     if (error) {
@@ -64,6 +81,9 @@ const LoginCard = () => {
         </Typography>
       </Card.Header>
       <Card.Body as="form">
+        <Button isFullWidth onClick={handleSignInWithGoogle}>
+          Sign in with Google
+        </Button>
         <div className="mb-4 mt-2 space-y-1.5">
           <Typography
             as="label"
@@ -120,7 +140,11 @@ const LoginCard = () => {
             Remember Me
           </Typography>
         </div>
-        <Button type="submit" isFullWidth onClick={handleSubmit(handleSignIn)}>
+        <Button
+          type="submit"
+          isFullWidth
+          onClick={handleSubmit(handleSignInWithEmail)}
+        >
           Sign In
         </Button>
       </Card.Body>
