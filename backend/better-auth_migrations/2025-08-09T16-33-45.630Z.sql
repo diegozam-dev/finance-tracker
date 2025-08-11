@@ -642,8 +642,8 @@ BEGIN
   END LOOP;
 
   -- 3. Inserta la nueva fila en 'profiles'.
-  INSERT INTO public.profiles (id, firstname, lastname, username)
-  VALUES (p_user_id, p_firstname, p_lastname, v_final_username)
+  INSERT INTO public.profiles (id, username)
+  VALUES (p_user_id, v_final_username)
   RETURNING * INTO new_profile;
 
   RETURN new_profile;
