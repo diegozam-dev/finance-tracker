@@ -616,8 +616,7 @@ $$;
 
 CREATE OR REPLACE FUNCTION public.create_profile_with_username(
   p_user_id TEXT,
-  p_firstname TEXT,
-  p_lastname TEXT
+  p_name TEXT
 )
 RETURNS public.profiles
 LANGUAGE plpgsql
@@ -629,7 +628,7 @@ DECLARE
   new_profile public.profiles;
 BEGIN
   -- 1. Construir la base del nombre de usuario a partir del nombre y apellido.
-  v_base_username := LEFT(LOWER(REPLACE(p_firstname || COALESCE(p_lastname, ''), ' ', '')), 6);
+  v_base_username := LEFT(LOWER(REPLACE(p_name, ' ', '')), 6);
 
   -- 2. Bucle para garantizar que el nombre de usuario final sea ÚNICO.
   LOOP
