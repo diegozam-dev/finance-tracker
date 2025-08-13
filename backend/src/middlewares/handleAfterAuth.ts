@@ -6,14 +6,14 @@ import { AuthResponseSchema } from '@/types/auth/auth.types.js';
 const handleAfterAuth = createAuthMiddleware(async ctx => {
   try {
     if (ctx.path.endsWith('/sign-up/email')) {
-      handleSignUp(ctx);
+      handleSignUpWithEmail(ctx);
     }
   } catch (error) {
     console.log(error);
   }
 });
 
-const handleSignUp = async (
+const handleSignUpWithEmail = async (
   ctx: MiddlewareContext<
     MiddlewareOptions,
     AuthContext & {
@@ -31,12 +31,9 @@ const handleSignUp = async (
     throw new Error('User creation failed in authentication system.');
   }
 
-  const [firstname, lastname] = user.name.split(' ');
-
-  await client.query('SELECT * FROM create_profile_with_username($1, $2, $3)', [
+  await client.query('SELECT * FROM create_profile_with_username($1, $2)', [
     user.id,
-    firstname,
-    lastname
+    user.name
   ]);
 
   client.release();
