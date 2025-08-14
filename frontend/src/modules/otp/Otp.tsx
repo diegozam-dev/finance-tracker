@@ -1,12 +1,17 @@
 import React, { useRef, useState } from 'react';
 
 import { Typography } from '@material-tailwind/react';
+import { authClient } from '../../utils/auth-client';
+import { useLocation, useNavigate } from 'react-router';
 
 const Otp = () => {
   const inputRefs = useRef<HTMLInputElement[]>([]);
   const [otp, setOtp] = useState(Array(6).fill(''));
+  const navigate = useNavigate();
+  const location = useLocation();
+  const userEmail = location.state.userEmail;
 
-  const handleChange = (index: number, value: string) => {
+  const handleChange = async (index: number, value: string) => {
     const newOtp = [...otp];
     newOtp[index] = value.replace(/[^0-9]/g, '');
     setOtp(newOtp);
@@ -15,9 +20,22 @@ const Otp = () => {
       inputRefs.current[index + 1].focus();
     }
 
-    // if (newOtp.every((digit) => digit !== '')) {
-    //   onComplete(newOtp.join(''));
-    // }
+    if (newOtp.every(digit => digit !== '')) {
+      console.log(newOtp.join(''));
+      console.log(userEmail);
+      const { data, error } = await authClient.emailOtp.verifyEmail({
+        email: userEmail,
+        otp: newOtp.join('')
+      });
+
+      if (error) {
+        return console.log(error.message);
+      }
+
+      console.log(data);
+
+      return navigate('/auth/login');
+    }
   };
 
   function handleBackspace(
@@ -39,7 +57,7 @@ const Otp = () => {
         className="flex items-center justify-center gap-1 text-center font-medium"
       >
         Enter the 6-digit OTP sent to{' '}
-        <span className="font-bold">+1 123-456-7890</span>
+        <span className="font-bold">{userEmail}</span>
       </Typography>
 
       <div className="my-4 flex items-center justify-center gap-2">
