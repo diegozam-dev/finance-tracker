@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { authClient } from '../../../utils/auth-client';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { type RegisterFormData } from '../types/authTypes';
 
 const loginSchema = z
@@ -42,6 +42,7 @@ const RegisterCard = () => {
   } = useForm({
     resolver: zodResolver(loginSchema)
   });
+  const navigate = useNavigate();
 
   const handleRegisterWithEmail = async (formData: RegisterFormData) => {
     const { firstname, lastname, email, password } = formData;
@@ -60,6 +61,12 @@ const RegisterCard = () => {
     }
 
     console.log(data);
+
+    return navigate('/auth/otp', {
+      state: {
+        userEmail: email
+      }
+    });
   };
 
   return (
