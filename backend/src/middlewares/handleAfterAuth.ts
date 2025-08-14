@@ -39,8 +39,8 @@ const handleSignUpWithEmail = async (
 
   const data = await auth.api.sendVerificationOTP({
     body: {
-      email: user.email, // required
-      type: 'sign-in' // required
+      email: user.email,
+      type: 'email-verification'
     }
   });
 
