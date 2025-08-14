@@ -2,6 +2,7 @@ import dbPool from '@/db/connection.js';
 import { AuthContext, MiddlewareContext, MiddlewareOptions } from 'better-auth';
 import { createAuthMiddleware } from 'better-auth/api';
 import { AuthResponseSchema } from '@/types/auth/auth.types.js';
+import { auth } from '@/utils/auth.js';
 
 const handleAfterAuth = createAuthMiddleware(async ctx => {
   try {
@@ -35,6 +36,15 @@ const handleSignUpWithEmail = async (
     user.id,
     user.name
   ]);
+
+  const data = await auth.api.sendVerificationOTP({
+    body: {
+      email: user.email, // required
+      type: 'sign-in' // required
+    }
+  });
+
+  console.log(data);
 
   client.release();
 };
