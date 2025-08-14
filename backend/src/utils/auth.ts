@@ -1,4 +1,5 @@
 import { betterAuth } from 'better-auth';
+import { emailOTP } from 'better-auth/plugins';
 import { Pool } from 'pg';
 
 import {
@@ -11,6 +12,7 @@ import {
   GOOGLE_CLIENT_SECRET
 } from '@/config.js';
 import handleAfterAuth from '@/middlewares/handleAfterAuth.js';
+import sendOtpEmail from './email.js';
 
 export const auth = betterAuth({
   database: new Pool({
@@ -22,6 +24,7 @@ export const auth = betterAuth({
   }),
   emailAndPassword: {
     enabled: true,
+    requireEmailVerification: true,
     autoSignIn: false
   },
   socialProviders: {
@@ -33,5 +36,14 @@ export const auth = betterAuth({
   trustedOrigins: ['http://localhost:5173'],
   hooks: {
     after: handleAfterAuth
-  }
+  },
+  plugins: [
+    emailOTP({
+      async sendVerificationOTP({ email, otp, type }) {
+        if (type === 'sign-in') {
+          await sendOtpEmail({ userEmail: email, otp: otp });
+        }
+      }
+    })
+  ]
 });
