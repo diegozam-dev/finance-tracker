@@ -12,7 +12,7 @@ import {
   GOOGLE_CLIENT_SECRET
 } from '@/config.js';
 import handleAfterAuth from '@/middlewares/handleAfterAuth.js';
-import sendOtpEmail from './email.js';
+import { sendOtp } from './email.js';
 
 export const auth = betterAuth({
   database: new Pool({
@@ -41,8 +41,8 @@ export const auth = betterAuth({
     emailOTP({
       async sendVerificationOTP({ email, otp, type }) {
         console.log(email, otp, type);
-        if (type === 'email-verification') {
-          await sendOtpEmail({ userEmail: email, otp: otp });
+        if (type === 'email-verification' || type === 'forget-password') {
+          await sendOtp({ userEmail: email, otp: otp });
         }
       }
     })

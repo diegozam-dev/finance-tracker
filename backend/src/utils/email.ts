@@ -6,7 +6,7 @@ import {
 } from '@/config.js';
 import nodemailer from 'nodemailer';
 
-const sendOtpEmail = async ({
+export const sendOtp = async ({
   userEmail,
   otp
 }: {
@@ -24,8 +24,6 @@ const sendOtpEmail = async ({
     }
   });
 
-  console.log('despues transporter');
-
   const mailOptions = {
     from: 'diegozambrano.dev@gmail.com',
     to: userEmail,
@@ -40,5 +38,3 @@ const sendOtpEmail = async ({
     console.error('Error al enviar el correo:', error);
   }
 };
-
-export default sendOtpEmail;
