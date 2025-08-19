@@ -156,6 +156,7 @@ const LoginCard = () => {
           Don't have an account?
           <Link to="/auth/register">Sign Up</Link>
         </Typography>
+        <Link to="/auth/send-link">Reset password</Link>
       </Card.Footer>
     </Card>
   );
