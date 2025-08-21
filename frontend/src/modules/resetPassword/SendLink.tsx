@@ -17,6 +17,7 @@ const SendLink = () => {
 
     if (error) console.log(error);
 
+    alert('Link enviado');
     console.log(data);
   };
 
