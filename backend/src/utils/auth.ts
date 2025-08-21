@@ -12,7 +12,7 @@ import {
   GOOGLE_CLIENT_SECRET
 } from '@/config.js';
 import handleAfterAuth from '@/middlewares/handleAfterAuth.js';
-import { sendOtp } from './email.js';
+import { sendConfirmation, sendOtp, sendUrlToResetPassword } from './email.js';
 
 export const auth = betterAuth({
   database: new Pool({
@@ -25,7 +25,13 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     requireEmailVerification: true,
-    autoSignIn: false
+    autoSignIn: false,
+    sendResetPassword: async ({ user, url, token }, request) => {
+      await sendUrlToResetPassword({ userEmail: user.email, url });
+    },
+    onPasswordReset: async ({ user }, request) => {
+      await sendConfirmation({ userEmail: user.email });
+    }
   },
   socialProviders: {
     google: {
