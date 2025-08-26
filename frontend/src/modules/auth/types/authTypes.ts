@@ -11,3 +11,8 @@ export type RegisterFormData = {
   password: string;
   confirmPassword: string;
 };
+
+export type BtnProviderProps = {
+  label: string;
+  provider: string;
+};
