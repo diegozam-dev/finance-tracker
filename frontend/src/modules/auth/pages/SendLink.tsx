@@ -1,7 +1,6 @@
 import { Input, Button } from '@material-tailwind/react';
 import { authClient } from '../../../utils/auth-client';
 import { useState } from 'react';
-import AuthContainer from '../layouts/AuthContainer';
 
 const SendLink = () => {
   const [input, setInput] = useState('');
@@ -23,11 +22,11 @@ const SendLink = () => {
   };
 
   return (
-    <AuthContainer>
+    <>
       <h1>Hola password</h1>
       <Input onChange={handleInputChange} placeholder="email" />
       <Button onClick={handleSendLink}>Send Code</Button>
-    </AuthContainer>
+    </>
   );
 };
 

@@ -1,6 +1,5 @@
 import { Typography } from '@material-tailwind/react';
 import OtpInput from '../components/OtpInput';
-import AuthContainer from '../layouts/AuthContainer';
 import { useLocation } from 'react-router';
 
 const Otp = () => {
@@ -8,7 +7,7 @@ const Otp = () => {
   const userEmail = location.state.userEmail;
 
   return (
-    <AuthContainer>
+    <>
       <Typography
         variant="small"
         color="primary"
@@ -26,7 +25,7 @@ const Otp = () => {
       >
         Did not receive the code? <span className="font-bold">Resend</span>
       </Typography>
-    </AuthContainer>
+    </>
   );
 };
 

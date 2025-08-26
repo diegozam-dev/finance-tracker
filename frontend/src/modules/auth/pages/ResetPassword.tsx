@@ -2,7 +2,6 @@ import { Button, Input } from '@material-tailwind/react';
 import { authClient } from '../../../utils/auth-client';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import AuthContainer from '../layouts/AuthContainer';
 
 // Página para resetear contraseña
 const ResetPassword = () => {
@@ -32,12 +31,12 @@ const ResetPassword = () => {
   };
 
   return (
-    <AuthContainer>
+    <>
       <Input onChange={handleInputChange} placeholder="new password" />
       <Button type="submit" onClick={handleReset}>
         Reset Password
       </Button>
-    </AuthContainer>
+    </>
   );
 };
 
