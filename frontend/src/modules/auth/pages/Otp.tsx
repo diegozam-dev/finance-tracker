@@ -12,7 +12,7 @@ const Otp = () => {
   const [otp, setOtp] = useState(Array(6).fill(''));
   const navigate = useNavigate();
 
-  const handleChange = async (index: number, value: string) => {
+  const handleInputChange = async (index: number, value: string) => {
     const newOtp = [...otp];
     newOtp[index] = value.replace(/[^0-9]/g, '');
     setOtp(newOtp);
@@ -37,16 +37,16 @@ const Otp = () => {
     }
   };
 
-  function handleBackspace(
+  const handleInputBackspace = (
     event: React.KeyboardEvent<HTMLInputElement>,
     index: number
-  ) {
+  ) => {
     const target = event.target as HTMLTextAreaElement;
 
     if (event.key === 'Backspace' && !target.value && index > 0) {
       inputRefs.current[index - 1].focus();
     }
-  }
+  };
 
   return (
     <>
@@ -67,8 +67,8 @@ const Otp = () => {
               maxLength={1}
               className="w-10 appearance-none h-10 bg-transparent text-center placeholder:text-slate-400 text-slate-700 text-lg border border-slate-200 rounded-md transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
               value={digit}
-              onChange={e => handleChange(index, e.target.value)}
-              onKeyDown={e => handleBackspace(e, index)}
+              onChange={e => handleInputChange(index, e.target.value)}
+              onKeyDown={e => handleInputBackspace(e, index)}
               ref={el => {
                 inputRefs.current[index] = el!;
               }}
