@@ -26,10 +26,10 @@ export const auth = betterAuth({
     enabled: true,
     requireEmailVerification: true,
     autoSignIn: false,
-    sendResetPassword: async ({ user, url, token }, request) => {
+    sendResetPassword: async ({ user, url }) => {
       await sendUrlToResetPassword({ userEmail: user.email, url });
     },
-    onPasswordReset: async ({ user }, request) => {
+    onPasswordReset: async ({ user }) => {
       await sendConfirmation({ userEmail: user.email });
     }
   },
@@ -46,7 +46,6 @@ export const auth = betterAuth({
   plugins: [
     emailOTP({
       async sendVerificationOTP({ email, otp, type }) {
-        console.log(email, otp, type);
         if (type === 'email-verification' || type === 'forget-password') {
           await sendOtp({ userEmail: email, otp: otp });
         }
