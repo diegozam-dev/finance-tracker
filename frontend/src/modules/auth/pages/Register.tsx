@@ -6,7 +6,7 @@ import { authClient } from '../../../utils/auth-client';
 import { Link, useNavigate } from 'react-router';
 import { type RegisterFormData } from '../types/authTypes';
 
-const loginSchema = z
+const registerFormSchema = z
   .object({
     firstname: z
       .string()
@@ -34,13 +34,13 @@ const loginSchema = z
     }
   });
 
-const RegisterCard = () => {
+const Register = () => {
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm({
-    resolver: zodResolver(loginSchema)
+    resolver: zodResolver(registerFormSchema)
   });
   const navigate = useNavigate();
 
@@ -222,4 +222,4 @@ const RegisterCard = () => {
   );
 };
 
-export default RegisterCard;
+export default Register;

@@ -13,7 +13,7 @@ import { authClient } from '../../../utils/auth-client';
 import { type LoginFormData } from '../types/authTypes';
 import BtnProvider from '../components/BtnProvider';
 
-const loginSchema = z.object({
+const loginFormSchema = z.object({
   email: z.string().email({ message: 'Invalid email.' }),
   password: z
     .string()
@@ -21,17 +21,16 @@ const loginSchema = z.object({
   remember: z.boolean().optional()
 });
 
-const LoginCard = () => {
+const Login = () => {
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm({
-    resolver: zodResolver(loginSchema)
+    resolver: zodResolver(loginFormSchema)
   });
 
   const handleSignInWithEmail = async (formData: LoginFormData) => {
-    console.log(authClient.getSession());
     const { email, password, remember } = formData;
 
     const { data, error } = await authClient.signIn.email({
@@ -47,7 +46,7 @@ const LoginCard = () => {
       return;
     }
 
-    alert(data);
+    alert('Sign in Ok');
     console.log(data);
   };
 
@@ -142,4 +141,4 @@ const LoginCard = () => {
   );
 };
 
-export default LoginCard;
+export default Login;
