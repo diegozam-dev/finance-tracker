@@ -3,7 +3,6 @@ import { authClient } from '../../../utils/auth-client';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 
-// Página para resetear contraseña
 const ResetPassword = () => {
   const [input, setInput] = useState('');
   const navigate = useNavigate();
